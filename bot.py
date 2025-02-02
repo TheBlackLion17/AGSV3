@@ -49,10 +49,11 @@ class Bot(Client):
         except Exception as e: logging.warning(f"Bot Isn't Able To Send Message To LOG_CHANNEL \n{e}")
         
         if bool(WEB_SUPPORT) is True:
-            app = web.AppRunner(web.Application(client_max_size=30000000))
+            app = web.AppRunner(await web_server())
             await app.setup()
-            await web.TCPSite(app, "0.0.0.0", 8080).start()
-            logging.info("Web Response Is Running......🕸️")
+            PORT = int(os.environ.get("PORT", 8000))  # Use port 8000 or env PORT
+            await web.TCPSite(app, "0.0.0.0", PORT).start()
+        print(f"{me.first_name} Is Started.....✨️")
             
     async def stop(self, *args):
         await super().stop()
