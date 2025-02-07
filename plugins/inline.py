@@ -66,7 +66,7 @@ async def answer(bot, query):
                 document_file_id=file.file_id,
                 caption=f_caption,
                 description=f'Size: {get_size(file.file_size)}\nType: {file.file_type}',
-                reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('🔮ᴊᴏɪɴ ᴀꜱ ꜰᴏʀ ᴍᴏʀᴇ 🔮', url="https://t.me/Screen_Gem_Squad") ] ] ))
+                reply_markup=InlineKeyboardMarkup( [ [ InlineKeyboardButton('🔮ᴊᴏɪɴ ᴀꜱ ꜰᴏʀ ᴍᴏʀᴇ 🔮', url="https://t.me/Screen_Gem_Squad") ] ] )))
 
     if results:
         switch_pm_text = f"{emoji.FILE_FOLDER} Results - {total}"
