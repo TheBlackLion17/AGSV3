@@ -1,4 +1,4 @@
-mport asyncio, re, ast, math, logging
+import asyncio, re, ast, math, logging
 from pyrogram.errors.exceptions.bad_request_400 import MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty
 from Script import script
 from utils import get_shortlink, admin_filter 
