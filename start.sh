@@ -1,3 +1,8 @@
+apt update && apt upgrade -y
+
+apt install git -y           
+pip install -U pip  
+
 if [ -z $UPSTREAM_REPO ]
 then
   echo "Cloning main Repository"
