@@ -6,7 +6,7 @@ pip install -U pip
 if [ -z $UPSTREAM_REPO ]
 then
   echo "Cloning main Repository"
-  git clone https://github.com/TheBlackLion17/AADVAN.git /AADVAN
+  git clone https://github.com/TheBlackLion17/AADVAN_VPS.git /AADVAN_VPS
 else
   echo "Cloning Custom Repo from $UPSTREAM_REPO "
   git clone $UPSTREAM_REPO /AADVAN
