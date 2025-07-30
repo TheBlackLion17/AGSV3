@@ -324,6 +324,25 @@ async def settings(client, message):
             parse_mode=enums.ParseMode.HTML,
         )
 
+@Client.on_message(filters.command("connect") & filters.private)
+async def connect_handler(client, message):
+    if len(message.command) < 2:
+        await message.reply("Usage: `/connect <group_id>`", quote=True)
+        return
+
+    try:
+        group_id = int(message.command[1])
+        user_id = message.from_user.id
+
+        added = await add_connection(group_id, user_id)
+        if added:
+            await message.reply("✅ Connected successfully!", quote=True)
+        else:
+            await message.reply("⚠️ Already connected!", quote=True)
+
+    except ValueError:
+        await message.reply("❌ Invalid group ID.", quote=True)
+
 
 
 @Client.on_message(filters.command('set_template'))
