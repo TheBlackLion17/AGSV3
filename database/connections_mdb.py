@@ -10,28 +10,27 @@ mydb = myclient[DATABASE_NAME]
 mycol = mydb['CONNECTION']
 
 
-async def add_connection(group_id: str, user_id: str) -> bool:
+async def add_connection(group_id: int, user_id: int) -> bool:
     try:
-        user_data = mycol.find_one({"_id": user_id}, {"_id": 0, "active_group": 0})
-
-        # Check for duplicate
-        if user_data:
-            group_ids = [x["group_id"] for x in user_data.get("group_details", [])]
+        query = mycol.find_one(
+            {"_id": user_id},
+            {"_id": 0, "active_group": 0}
+        )
+        if query:
+            group_ids = [x["group_id"] for x in query.get("group_details", [])]
             if group_id in group_ids:
                 return False
 
         group_details = {"group_id": group_id}
 
-        if not user_data:
-            # New user
+        if query is None:
             data = {
                 "_id": user_id,
                 "group_details": [group_details],
-                "active_group": group_id
+                "active_group": group_id,
             }
             mycol.insert_one(data)
         else:
-            # Existing user, update
             mycol.update_one(
                 {"_id": user_id},
                 {
@@ -40,70 +39,91 @@ async def add_connection(group_id: str, user_id: str) -> bool:
                 }
             )
         return True
-
     except Exception as e:
-        logger.exception(f"add_connection error: {e}")
+        logger.exception(f"Failed to add connection for {user_id} → {group_id}: {e}", exc_info=True)
         return False
 
 
-async def active_connection(user_id: str) -> int | None:
-    query = mycol.find_one({"_id": user_id}, {"_id": 0, "group_details": 0})
-    return int(query["active_group"]) if query and query.get("active_group") else None
-
-
-async def all_connections(user_id: str) -> list[str] | None:
-    query = mycol.find_one({"_id": user_id}, {"_id": 0, "active_group": 0})
-    if query:
-        return [x["group_id"] for x in query.get("group_details", [])]
-    return None
-
-
-async def if_active(user_id: str, group_id: str) -> bool:
-    query = mycol.find_one({"_id": user_id}, {"_id": 0, "group_details": 0})
-    return bool(query and query.get("active_group") == group_id)
-
-
-async def make_active(user_id: str, group_id: str) -> bool:
+async def active_connection(user_id: int) -> int | None:
     try:
-        result = mycol.update_one({"_id": user_id}, {"$set": {"active_group": group_id}})
-        return result.modified_count > 0
+        query = mycol.find_one({"_id": user_id}, {"_id": 0, "group_details": 0})
+        return int(query["active_group"]) if query and query.get("active_group") else None
     except Exception as e:
-        logger.exception(f"make_active error: {e}")
+        logger.exception(f"Error fetching active connection for {user_id}: {e}")
+        return None
+
+
+async def all_connections(user_id: int) -> list[int] | None:
+    try:
+        query = mycol.find_one({"_id": user_id}, {"_id": 0, "active_group": 0})
+        if query:
+            return [x["group_id"] for x in query.get("group_details", [])]
+        return None
+    except Exception as e:
+        logger.exception(f"Error getting all connections for {user_id}: {e}")
+        return None
+
+
+async def if_active(user_id: int, group_id: int) -> bool:
+    try:
+        query = mycol.find_one({"_id": user_id}, {"_id": 0, "group_details": 0})
+        return query is not None and query.get("active_group") == group_id
+    except Exception as e:
+        logger.exception(f"Error checking if group {group_id} is active for {user_id}: {e}")
         return False
 
 
-async def make_inactive(user_id: str) -> bool:
+async def make_active(user_id: int, group_id: int) -> bool:
     try:
-        result = mycol.update_one({"_id": user_id}, {"$set": {"active_group": None}})
-        return result.modified_count > 0
+        update = mycol.update_one(
+            {"_id": user_id},
+            {"$set": {"active_group": group_id}}
+        )
+        return update.modified_count > 0
     except Exception as e:
-        logger.exception(f"make_inactive error: {e}")
+        logger.exception(f"Error setting group {group_id} as active for {user_id}: {e}")
         return False
 
 
-async def delete_connection(user_id: str, group_id: str) -> bool:
+async def make_inactive(user_id: int) -> bool:
     try:
-        result = mycol.update_one(
+        update = mycol.update_one(
+            {"_id": user_id},
+            {"$set": {"active_group": None}}
+        )
+        return update.modified_count > 0
+    except Exception as e:
+        logger.exception(f"Error making all connections inactive for {user_id}: {e}")
+        return False
+
+
+async def delete_connection(user_id: int, group_id: int) -> bool:
+    try:
+        update = mycol.update_one(
             {"_id": user_id},
             {"$pull": {"group_details": {"group_id": group_id}}}
         )
-
-        if result.modified_count == 0:
+        if update.modified_count == 0:
             return False
 
-        user_data = mycol.find_one({"_id": user_id}, {"_id": 0})
+        query = mycol.find_one({"_id": user_id})
+        group_details = query.get("group_details", [])
+        active_group = query.get("active_group")
 
-        # Update active group
-        group_details = user_data.get("group_details", [])
         if group_details:
-            if user_data.get("active_group") == group_id:
-                last_group = group_details[-1]["group_id"]
-                mycol.update_one({"_id": user_id}, {"$set": {"active_group": last_group}})
+            if active_group == group_id:
+                # Make last group in list active
+                new_active = group_details[-1]["group_id"]
+                mycol.update_one(
+                    {"_id": user_id},
+                    {"$set": {"active_group": new_active}}
+                )
         else:
-            mycol.update_one({"_id": user_id}, {"$set": {"active_group": None}})
-
+            mycol.update_one(
+                {"_id": user_id},
+                {"$set": {"active_group": None}}
+            )
         return True
-
     except Exception as e:
-        logger.exception(f"delete_connection error: {e}")
+        logger.exception(f"Failed to delete connection {group_id} for {user_id}: {e}", exc_info=True)
         return False
