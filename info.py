@@ -11,9 +11,9 @@ def is_enabled(value, default):
 
 
 # PyroClient Setup 
-API_ID = int(environ.get('API_ID','20919286'))
-API_HASH = environ.get('API_HASH','57b85f72104db3f08f9795b0410eb556')
-BOT_TOKEN = environ.get('BOT_TOKEN', '6146949032:AAFAVhQe8ZrfqLJGoagO0zxnJs5M2dZnzuY')
+API_ID = int(environ.get('API_ID','13357171'))
+API_HASH = environ.get('API_HASH','d39c4324a40a8a6b27a067f8ff2b987e')
+BOT_TOKEN = environ.get('BOT_TOKEN', '8382919058:AAEH-d5YREufbQ596OmSiBki-dLQnRWvkBo')
 
 
 # Bot settings
@@ -23,8 +23,8 @@ UPTIME = time.time()
 
 # Admins, Channels & Users
 CACHE_TIME = int(environ.get('CACHE_TIME', 300))
-ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '5909932224').split()]
-CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHANNELS', '-1001871354889').split()]
+ADMINS = [int(admin) if id_pattern.search(admin) else admin for admin in environ.get('ADMINS', '7705748477').split()]
+CHANNELS = [int(ch) if id_pattern.search(ch) else ch for ch in environ.get('CHANNELS', '-1002801544620').split()]
 auth_users = [int(user) if id_pattern.search(user) else user for user in environ.get('AUTH_USERS', '').split()]
 AUTH_USERS = (auth_users + ADMINS) if auth_users else []
 auth_channel = environ.get('AUTH_CHANNEL')
@@ -33,8 +33,8 @@ AUTH_CHANNEL = int(auth_channel) if auth_channel and id_pattern.search(auth_chan
 AUTH_GROUPS = [int(ch) for ch in auth_grp.split()] if auth_grp else None
 
 # MongoDB information
-REQ_CHANNEL = environ.get('REQ_CHANNEL', "-1002109728204")
-DATABASE_URL = environ.get('DATABASE_URL', "mongodb+srv://test:test@cluster0.lvhcq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+REQ_CHANNEL = environ.get('REQ_CHANNEL', "-1002801544620")
+DATABASE_URL = environ.get('DATABASE_URL', "mongodb+srv://filter:filter@cluster0.wmrin9q.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 DATABASE_NAME = environ.get('DATABASE_NAME', "cluster0")
 FILE_DB_URL = environ.get("FILE_DB_URL", DATABASE_URL)
 FILE_DB_NAME = environ.get("FILE_DB_NAME", DATABASE_NAME)
@@ -59,8 +59,8 @@ SHORT_API = environ.get("SHORT_API")
 
 # Others
 IMDB_DELET_TIME = int(environ.get('IMDB_DELET_TIME', "300"))
-LOG_CHANNEL = int(environ.get('LOG_CHANNEL', -1002109728204))
-SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 'MKN_BOTZ_DISCUSSION_GROUP')
+LOG_CHANNEL = int(environ.get('LOG_CHANNEL', '-1002801544620'))
+SUPPORT_CHAT = environ.get('SUPPORT_CHAT', 'Movies_Hub_OG')
 P_TTI_SHOW_OFF = is_enabled(environ.get('P_TTI_SHOW_OFF', "True"), True)
 PM_IMDB = is_enabled(environ.get('PM_IMDB', "True"), True)
 IMDB = is_enabled(environ.get('IMDB', "True"), True)
