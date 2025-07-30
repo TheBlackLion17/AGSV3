@@ -20,7 +20,7 @@ youtube-search-python==1.6.6
 yt-dlp==2023.10.07 
 
 # IMDb
-cinemagoer==2023.9.1 
+cinemagoer2023.5.1
 
 # Others
 opencv-python-headless==4.8.1.78 
