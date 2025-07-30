@@ -35,7 +35,7 @@ async def start(client, message):
         buttons = [[
             InlineKeyboardButton("⇋ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ⇋ ", url=f"http://t.me/{temp.U_NAME}?startgroup=true")
             ],[
-            InlineKeyboardButton("📢 𝗢𝘁𝘁 𝗨𝗽𝗱𝗮𝘁𝗲𝘃 📢", url="https://t.me/+RDsxY-lQ55wwOWI1''), 
+            InlineKeyboardButton("📢 𝗢𝘁𝘁 𝗨𝗽𝗱𝗮𝘁𝗲𝘃 📢", url="https://t.me/+RDsxY-lQ55wwOWI1"), 
             InlineKeyboardButton("🚧 𝗕𝗼𝘁 𝗨𝗽𝗱𝗮𝘁𝗲 🚧", url="https://t.me/AgsModsOG")
             ],[      
             InlineKeyboardButton("⚡𝗠𝗼𝘃𝗲 𝗖𝗵𝗮𝗻𝗻𝗲𝗹⚡", url="https://t.me/Movies_Hub_OG")
@@ -72,7 +72,7 @@ async def start(client, message):
         buttons = [[
             InlineKeyboardButton("⇋ ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ɢʀᴏᴜᴘ ⇋", url=f"http://t.me/{temp.U_NAME}?startgroup=true")
             ],[
-            InlineKeyboardButton("📢 𝗢𝘁𝘁 𝗨𝗽𝗱𝗮𝘁𝗲𝘃 📢", url="https://t.me/+RDsxY-lQ55wwOWI1''), 
+            InlineKeyboardButton("📢 𝗢𝘁𝘁 𝗨𝗽𝗱𝗮𝘁𝗲𝘃 📢", url="https://t.me/+RDsxY-lQ55wwOWI1"), 
             InlineKeyboardButton("🚧 𝗕𝗼𝘁 𝗨𝗽𝗱𝗮𝘁𝗲 🚧", url="https://t.me/AgsModsOG")
             ],[      
             InlineKeyboardButton("⚡𝗠𝗼𝘃𝗲 𝗖𝗵𝗮𝗻𝗻𝗲𝗹⚡", url="https://t.me/Movies_Hub_OG")
