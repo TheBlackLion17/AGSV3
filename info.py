@@ -13,7 +13,7 @@ def is_enabled(value, default):
 # PyroClient Setup 
 API_ID = int(environ.get('API_ID','13357171'))
 API_HASH = environ.get('API_HASH','d39c4324a40a8a6b27a067f8ff2b987e')
-BOT_TOKEN = environ.get('BOT_TOKEN', '8382919058:AAEN-SXtLWDUp4x1dApwtudF0Iy5PClvviw')
+BOT_TOKEN = environ.get('BOT_TOKEN', '8161552461:AAEIRDGMbwBDIrtjmVeD9k6DxdIf55KuN3s')
 
 
 # Bot settings
@@ -34,7 +34,7 @@ AUTH_GROUPS = [int(ch) for ch in auth_grp.split()] if auth_grp else None
 
 # MongoDB information
 REQ_CHANNEL = environ.get('REQ_CHANNEL', "-1002801544620")
-DATABASE_URL = environ.get('DATABASE_URL', "mongodb+srv://filter:filter@cluster0.wmrin9q.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+DATABASE_URL = environ.get('DATABASE_URL', "mongodb+srv://v2:v2@cluster0.9dbt2hc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 DATABASE_NAME = environ.get('DATABASE_NAME', "cluster0")
 FILE_DB_URL = environ.get("FILE_DB_URL", DATABASE_URL)
 FILE_DB_NAME = environ.get("FILE_DB_NAME", DATABASE_NAME)
